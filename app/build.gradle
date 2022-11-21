@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "cn.dolphinstar.demo"
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0" 
+    }
+    //指定变体
+    flavorDimensions "dps_abi"
+    productFlavors{
+        arm{
+            dimension "dps_abi"
+        }
+        x8664{
+            dimension "dps_abi"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //海豚星空投屏sdk 变体与 productFlavors 设置一致即可
+    //指定 arm 变体依赖 仅对改变体有效
+    armImplementation 'cn.dolphinstar:playerCore:5.0.2'
+    //指定 x8684 变体依赖 仅对改变体有效
+    x8664Implementation 'cn.dolphinstar:playerCore_x86_64:5.0.2'
+
+    //二维码生成库
+    implementation 'com.google.zxing:core:3.2.1'
+}
